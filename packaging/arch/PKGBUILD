@@ -1,0 +1,30 @@
+# okaru-calc: compila la rama main del checkout (OKARU_CALC_REPO, por defecto ~/Projects/okaru-calc).
+pkgname=okaru-calc
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='OKARU (郁): calculadora'
+arch=(x86_64)
+url='https://github.com/MrAndyVF/okaru-calc'
+license=(MIT)
+# Sin ABI estable: depende de la versión exacta del núcleo con el que se compiló (la instalada al compilar).
+_core=$(pacman -Q okaru-core 2>/dev/null | cut -d' ' -f2)
+depends=("okaru-core${_core:+=$_core}" libqalculate)
+makedepends=(meson ninja pkgconf okaru-core tomlplusplus)
+options=('!debug' '!lto')
+source=("okaru-calc::git+file://${OKARU_CALC_REPO:-$HOME/Projects/okaru-calc}#branch=main")
+sha256sums=(SKIP)
+
+pkgver() {
+  cd okaru-calc
+  git describe --long --tags --abbrev=9 --match 'v*' | sed 's/^v//; s/-\([0-9]*\)-g/.r\1.g/'
+}
+
+build() {
+  arch-meson okaru-calc build -Dtests=disabled
+  meson compile -C build
+}
+
+package() {
+  meson install -C build --destdir "$pkgdir"
+  install -Dm644 okaru-calc/LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+}
