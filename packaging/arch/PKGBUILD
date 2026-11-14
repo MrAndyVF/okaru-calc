@@ -1,4 +1,4 @@
-# okaru-calc: compila la rama main del checkout (OKARU_CALC_REPO, por defecto ~/Projects/okaru-calc).
+# okaru-calc: compila la rama main del checkout (OKARU_CALC_REPO, por defecto ~/Projects/okaru-project/okaru-calc).
 pkgname=okaru-calc
 pkgver=1.0.0
 pkgrel=1
@@ -11,7 +11,7 @@ _core=$(pacman -Q okaru-core 2>/dev/null | cut -d' ' -f2)
 depends=("okaru-core${_core:+=$_core}" libqalculate)
 makedepends=(meson ninja pkgconf okaru-core tomlplusplus nlohmann-json) # nlohmann-json: la piden las cabeceras del núcleo (okaru-core <= 1.2.4 no la declaraba)
 options=('!debug' '!lto')
-source=("okaru-calc::git+file://${OKARU_CALC_REPO:-$HOME/Projects/okaru-calc}#branch=main")
+source=("okaru-calc::git+file://${OKARU_CALC_REPO:-$HOME/Projects/okaru-project/okaru-calc}#branch=main")
 sha256sums=(SKIP)
 
 pkgver() {
