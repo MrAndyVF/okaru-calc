@@ -1,6 +1,6 @@
 # okaru-calc: compila la rama main del checkout (OKARU_CALC_REPO, por defecto ~/Projects/okaru-project/okaru-calc).
 pkgname=okaru-calc
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc='OKARU (郁): calculadora'
 arch=(x86_64)
